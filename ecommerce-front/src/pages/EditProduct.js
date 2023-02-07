@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { PrimaryButton } from './CommonStyled';
 import axios from 'axios';
 import { setHeaders, url } from '../features/registerApi';
+import { useEffect } from 'react';
 
 
 export default function EditProduct({prodId}) { ///alterar nome da função //recebe req.id de ProductsList
@@ -20,22 +21,44 @@ export default function EditProduct({prodId}) { ///alterar nome da função //re
 //const dispatch = useDispatch();
 const {items, editStatus} = useSelector(state => state.products)
 
-
+   
+    ///multer
     const [image, setImage] = useState("")
+
     const [currentProd, setCurrentProd] = useState({});
     const [previewImg, setPreviewImg] = useState("");
-        //console.log(productImg)
     const [item, setItem] = useState("");
     const [desc, setDesc] = useState("");
     const [valor, setValor ] = useState("");
-    const [categoria, setCategoria ] = useState("")
-    const [produtor, setProdutor ] = useState("")
-    
 
-    const handleProductImageUpload = (e) => {
-      setImage(e.target.files[0])
-       
-    };
+     ///categories
+      const [cat, setCat ] = useState([{'id': '', 'name': ''}])
+      const [categorias, setCategorias ] = useState("")
+
+
+      ///get categories
+      useEffect(() =>{
+        axios
+        .get(`${url}/categories`)
+          .then(res => {
+            console.log(res)
+          //const [cat1, cat2, cat3, cat4]= res.data
+            setCat(
+              res.data
+            )
+            console.log(cat)
+          }) 
+        .catch(err => {
+            console.log(err)
+          })
+        
+        }, [])
+
+
+      const handleProductImageUpload = (e) => {
+        setImage(e.target.files[0])
+        
+      };
 
 
           const changeOnClick = (e) =>{
@@ -43,15 +66,13 @@ const {items, editStatus} = useSelector(state => state.products)
 
             const formData = new FormData()
             
-            formData.append("image", image) //mesmo nome
+            formData.append("image", image) //multer: image (mesmo nome)
             formData.append("item", item)
             formData.append("desc", desc)
             formData.append("valor", valor)
-            formData.append("categoria", categoria)
-            formData.append("produtor", produtor)
-         
+            formData.append("categorias", categorias) //categories
             
-            console.log(formData)
+            console.log(categorias)
             
             axios
             .put(`${url}/produtos/${prodId}`, formData, setHeaders())
@@ -82,8 +103,8 @@ const {items, editStatus} = useSelector(state => state.products)
     setItem(selectedProd.item)
     setDesc(selectedProd.desc)
     setValor(selectedProd.valor)        
-    setCategoria(selectedProd.categoria)       
-    setProdutor(selectedProd.produtor)
+    //setCat("")       
+   
     
             
 
@@ -112,13 +133,14 @@ const {items, editStatus} = useSelector(state => state.products)
             onChange= {handleProductImageUpload}
             required/>
 
-            <select onChange={(e) => setProdutor(e.target.value)} value={produtor} required>
-                <option value=""> Selecionar produtor</option>
-                <option value = "Valéria">Valéria</option>
-                <option value="Tomie">Tomie</option>
-                <option value="Edson">Edson</option>
-                <option value="Ana do Mel"> Ana do Mel</option>
-            </select>
+          <select value={categorias} onChange={(e) => setCategorias(e.target.value)} required>
+              <option value=""> Selecionar</option>
+              {cat.map(c =>(
+              <option  value = {c._id}>{c.name}</option>
+              ))}
+              
+          </select>
+
 
             <input 
             type="text" 
@@ -141,12 +163,7 @@ const {items, editStatus} = useSelector(state => state.products)
             required
             onChange={(e) => setValor(e.target.value)}/>
 
-            <input 
-            type="text" 
-            placeholder='Categoria'
-            value = {categoria}
-            required
-            onChange={(e) => setCategoria(e.target.value)}/>
+            
 
             <PrimaryButton type ="submit">
                 {editStatus === "pending" ? "Submitting" : "Submit"}
@@ -154,7 +171,7 @@ const {items, editStatus} = useSelector(state => state.products)
 
             <ImagePreview>
                     {previewImg? (
-                        <img src={previewImg} alt="img"/>
+                        <img src={`http://localhost:5000/images/${previewImg}`} alt="img"/>
                         ): (
                             <p> Image preview will appear here!</p>
                         )}

@@ -1,5 +1,4 @@
 .signup-image-container{
-    background-image: url("../images/img-1.jpg");
     height: 90vh;
     background-size: cover;
 
@@ -15,9 +14,18 @@
 
 }
 
+.title {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+
+}
+
 @media screen and (max-width: 756px){
     .signup-image-container{
         display:none;
     }
 }
+
+
 

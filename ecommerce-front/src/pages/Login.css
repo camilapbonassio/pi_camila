@@ -1,5 +1,4 @@
 .login-image-container{
-    background-image: url("../images/img-1.jpg");
     height: 90vh;
     background-size: cover;
 
@@ -12,6 +11,13 @@
     height: 90vh;
     justify-content: center;
     margin: 0;
+
+}
+
+.title {
+    margin: 0;
+    padding: 0;
+    text-align: left;
 
 }
 

@@ -1,10 +1,10 @@
 const express = require("express");
-const {Category} = require("../models/Category")
+const {Categorias} = require("../models/Categoria")
 const router = express.Router();
 
 /// listar todas categorias
 router.get("/", async (req, res) => {
-    const categoryList = await Category.find();
+    const categoryList = await Categorias.find();
 
     if(!categoryList) {
         res.status(500).json({success: false})
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
 //// find specific category
 router.get("/find/:id", async (req, res) => {
-    const category = await Category.findById(req.params.id);
+    const category = await Categorias.findById(req.params.id);
 
     if(!category) {
         res.status(500).json({message: "the id is wrong"})
@@ -24,7 +24,7 @@ router.get("/find/:id", async (req, res) => {
 
 /// update
 router.put("/update/:id", async (req, res) =>{
-    const category = await Category.findByIdAndUpdate(
+    const category = await Categorias.findByIdAndUpdate(
         req.params.id, {
 
             $set: {
@@ -49,7 +49,7 @@ router.post(("/"), async (req, res) => {
     try {
 
         if(name){
-            const category = new Category({
+            const category = new Categorias({
                 name,
                 color
             })
@@ -67,7 +67,7 @@ router.post(("/"), async (req, res) => {
 } })
 
 router.delete("/:id", (req, res)  => {
-    Category.findByIdAndRemove(req.params.id).then(category =>{
+    Categorias.findByIdAndRemove(req.params.id).then(category =>{
     try{
         if(category) {
             return res.status(200).json({success: true, message: "category deleted"})

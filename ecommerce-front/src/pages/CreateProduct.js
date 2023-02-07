@@ -6,25 +6,52 @@ import { PrimaryButton } from "./CommonStyled";
 //import { productsCreate } from '../features/productSlice';
 import axios from 'axios';
 import { url } from '../features/registerApi';
+//import { CategoriesDropDown } from '../components/CategoriesDropDown';
+import { useEffect } from 'react';
 
 
 const CreateProduct = () => {
     //const dispatch = useDispatch();
+  
 
-
+//multer
     const[filename, setFileName] = useState("")
-        //console.log(productImg)
+///produto      
     const [item, setItem] = useState("");
     const [desc, setDesc] = useState("");
     const [valor, setValor ] = useState("");
-    const [categoria, setCategoria ] = useState("")
-    const [produtor, setProdutor ] = useState("")
+///categories
+    const [cat, setCat ] = useState([{'id': '', 'name': ''}])
+    const [categorias, setCategorias ] = useState("")
+    
 
     const handleProductImageUpload = (e) => {
        setFileName(e.target.files[0])
     };
+
+///get categories
+useEffect(() =>{
+  axios
+  .get(`${url}/categories`)
+    .then(res => {
+      console.log(res)
+    //const [cat1, cat2, cat3, cat4]= res.data
+      setCat(
+        res.data
+      )
+    }) 
+  .catch(err => {
+      console.log(err)
+    })
+   
+  }, [])
+
+
+
 /*
-    
+    ///valida a categoria
+const category = await Categorias.findById(req.body.categorias)
+if(!category) return res.status(400).send("Invalid Category")
     const handleSubmit = async(e) => {
         e.preventDefault();
         dispatch(
@@ -68,8 +95,7 @@ formData.append("image", filename) //mesmo nome
 formData.append("item", item)
 formData.append("desc", desc)
 formData.append("valor", valor)
-formData.append("categoria", categoria)
-formData.append("produtor", produtor)
+formData.append("categorias", categorias) //categories
 
 console.log(formData)
 
@@ -80,7 +106,7 @@ axios
   console.log(err)
 })
 
-
+console.log(categorias)
 };
 
   return (
@@ -94,14 +120,14 @@ axios
             onChange= {handleProductImageUpload}
             required/>
 
-            <select onChange={(e) => setProdutor(e.target.value)} required>
-                <option value=""> Selecionar produtor</option>
-                <option value = "Valéria">Valéria</option>
-                <option value="Tomie">Tomie</option>
-                <option value="Edson">Edson</option>
-                <option value="Ana do Mel"> Ana do Mel</option>
-            </select>
-
+          <select value={categorias} onChange={(e) => setCategorias(e.target.value)} required>
+              <option value=""> Selecionar</option>
+              {cat.map(c =>(
+              <option  value = {c._id}>{c.name}</option>
+              ))}
+              
+          </select>
+            
             <input 
             type="text" 
             placeholder='nome'
@@ -120,22 +146,10 @@ axios
             required
             onChange={(e) => setValor(e.target.value)}/>
 
-            <input 
-            type="text" 
-            placeholder='Categoria'
-            required
-            onChange={(e) => setCategoria(e.target.value)}/>
 
             <PrimaryButton type ="submit">Submit</PrimaryButton>
 
-            <ImagePreview>
-                    {filename? (
-                        <img src={""} alt="img"/>
-                        ): (
-                            <p> Image preview will appear here!</p>
-                        )}
-
-            </ImagePreview>
+            
 
             </StyledForm>
 

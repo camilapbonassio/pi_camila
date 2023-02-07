@@ -1,7 +1,7 @@
 const express = require("express")
 const cloudinary = require("../utils/cloudinary")
 const {Produto} = require("../models/Produto")
-const {Category} = require("../models/Category")
+const {Categorias} = require("../models/Categoria")
 const {isAdmin} = require("../middleware/auth")
 const {upload} = require ("../middleware/multer")
 var fs = require('fs');
@@ -12,20 +12,23 @@ const router = express.Router()
 
 //receber do cliente (do dashboard) - criar produto
 
-///valida a categoria
-//const category = await Category.findById(req.body.category)
-//if(!category) return res.status(400).send("Invalid Category")
+
 
 router.post("/", upload.single("image"), async (req, res) =>{
+
+    ///valida a categoria
+const category = await Categorias.findById(req.body.categorias)
+if(!category) return res.status(400).send("Invalid Category")
+
     try{
     const product = new Produto ({
         item: req.body.item,
         desc: req.body.desc,
         valor: req.body.valor,
-        produtor: req.body.produtor,
-        categoria: req.body.categoria,
+        categorias: req.body.categorias,
         img:req.file.originalname
     })
+    console.log(req.body)
     const savedProduct = await product.save();
     res.status(200).send(savedProduct);
         } catch(error){
@@ -38,7 +41,7 @@ router.post("/", upload.single("image"), async (req, res) =>{
 /// enviar para o cliente (para a tela de produtos)
 router.get("/", async(req, res) => {
     try {
-        const products = await Produto.find()
+        const products = await Produto.find().populate('categorias')
         res.status(200).send(products)
         
     } catch (error) {
@@ -64,7 +67,7 @@ router.get("/find/:id", async (req, res) => {
 
 
 //delete product
-router.delete("/:id", isAdmin, async (req,res) => {
+router.delete("/:id", async (req,res) => {
     try{
         const product = await Produto.findById(req.params.id);
 
@@ -88,8 +91,7 @@ router.put("/:id", upload.single("image"), async(req, res) => {
         formData.item = req.body.item,
         formData.desc = req.body.desc,
         formData.valor = req.body.valor, 
-        formData.produtor = req.body.produtor, 
-        formData.categoria = req.body.categoria,
+        formData.categorias = req.body.categorias,
         formData.img = req.file.originalname;
 
         formData

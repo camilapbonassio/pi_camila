@@ -6,7 +6,7 @@ import jwtDecode from "jwt-decode";
 
 
 const initialState = {
-    token: localStorage.getItem("token"),
+    token: sessionStorage.getItem("token"),
     name: "",
     email: "",
     _id: "",
@@ -29,7 +29,7 @@ export const registerState = createAsyncThunk(
                 password: values.password
             }); 
 
-            localStorage.setItem("token", token.data)
+            sessionStorage.setItem("token", token.data)
 
             return token.data
 
@@ -52,7 +52,7 @@ export const registerState = createAsyncThunk(
                 }); 
 
                 //insere o token no localstorage
-                localStorage.setItem("token", token.data)
+                sessionStorage.setItem("token", token.data)
                 //retorna o token
                 return token.data
     
@@ -87,7 +87,8 @@ const authSlice = createSlice({
             }
         },
         logoutUser(state, action){
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
+            
 
             return {
                 ...state,

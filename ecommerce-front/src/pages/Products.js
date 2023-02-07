@@ -36,12 +36,8 @@ function Products () {
                         
                         <h3>{product.item}</h3>
                         <img src = {`http://localhost:5000/images/${product?.img}`} alt ={product.item}/>
-                        <div className="detalhes">
-                            <span>{product.desc}</span>
-                            <span className='price'>{product.valor}</span>    
-                        </div>
-                        
-                        <button onClick = {() => navigate(`/product-view/${product._id}`)}>View</button> 
+                        <div className='price'>R$ {product.valor}</div>
+                        <button onClick = {() => navigate(`/product-view/${product._id}`)}>Detalhes</button> 
                         <button onClick = {()=> handleAddToCart(product)}>Adicionar ao carrinho</button>
                     </div>
                 ))}

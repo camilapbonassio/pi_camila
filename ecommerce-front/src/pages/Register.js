@@ -49,40 +49,38 @@ function Register() {
 
     <Container>
         <Row>
-            <Col md = {6} className="signup-form-container">
+            <Col md = {12} className="signup-form-container">
                 
                 <Form onSubmit={handleSubmit}>
                 
-                <h1>Crie a sua conta</h1>
+                <h1>Cadastro de usuário</h1>
                 
 
                 <Form.Group className='mb-4' >
-                        <Form.Label>Nome</Form.Label>
-                        <Form.Control type="text" placeholder = "Enter name"  required onChange={(e) => setUser({...user, name: e.target.value})}/>
+                    <div className='title'><Form.Label><span>Nome</span></Form.Label></div>
+                    <Form.Control type="text" placeholder = "Enter name"  required onChange={(e) => setUser({...user, name: e.target.value})}/>
                     </Form.Group>
                     
                     <Form.Group className='mb-4'>
-                        <Form.Label>E-mail</Form.Label>
-                        <Form.Control type="email" placeholder = "Enter email"  required onChange={(e) => setUser({...user, email: e.target.value})}/>
+                    <div className='title'><Form.Label><span>E-mail</span></Form.Label></div>
+                    <Form.Control type="email" placeholder = "Enter email"  required onChange={(e) => setUser({...user, email: e.target.value})}/>
                     </Form.Group>
                 
         
                     <Form.Group className='mb-4'>
-                        <Form.Label>Senha</Form.Label>
-                        <Form.Control type="password" placeholder = "Enter password" required onChange={(e) => setUser({...user, password: e.target.value})}/>
+                    <div className='title'><Form.Label><span>Senha</span></Form.Label></div>
+                    <Form.Control type="password" placeholder = "Enter password" required onChange={(e) => setUser({...user, password: e.target.value})}/>
                     </Form.Group>
 
                     <Form.Group className='mb-4'>
-                        <Button type="submit" >
-                            {auth.registerStatus === "pending"? "Enviando": "Criar conta"}
-                        </Button>
+                    <Button type="submit" >
+                            {auth.registerStatus === "pending"? "enviando": "Cadastrar"}                            
+                    </Button>
 
-                        
-                    {auth.registerStatus === "rejected"? 
-                    (<p>{auth.registerError}</p>): null}
-                    
                        
                     </Form.Group>
+                   
+                    {auth.registerStatus === "rejected"? "usuário já existe": null}
                     
 
                   
@@ -90,7 +88,7 @@ function Register() {
                    
                     
                     <p>
-                        Don't have an account? <Link to="/login">Login</Link>{" "}
+                        Já é cadastrado? <Link to="/login">Faça login</Link>{" "}
                     </p>
 
                     
@@ -98,9 +96,7 @@ function Register() {
                 
                 </Form>
             </Col>
-            <Col md = {6} className="signup-image-container">
-                
-            </Col>
+            
         </Row>
     </Container>
   )

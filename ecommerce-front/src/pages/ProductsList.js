@@ -53,6 +53,7 @@ const columns = [
     width: 170,
     renderCell: (params) => {
       //console.log(params)
+      console.log(params.row.id)
       return (
         <ImageContainer>
           <Actions>
@@ -68,6 +69,7 @@ const columns = [
   ];
 
   const handleDelete = (id) => {
+    console.log(id)
     dispatch(productsDelete(id))
   }
 

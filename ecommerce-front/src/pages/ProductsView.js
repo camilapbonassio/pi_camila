@@ -51,9 +51,10 @@ console.log(records.img)
         <img src = {`http://localhost:5000/images/${records?.img}`}  alt ={records.item}/>
         <div className="detalhes">
          
-          <span>{records.desc}</span>
-          <span className='price'>{records.valor}</span>    
+          <div>{records.desc}</div>
+             
         </div>
+        <div className='price'>R$ {records.valor}</div> 
       </div>
     </div>
 

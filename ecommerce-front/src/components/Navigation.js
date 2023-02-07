@@ -43,8 +43,8 @@ const Navigation = () => {
           </Link>)
         :
         (<div>
-          <Link to="/login"><span>Entrar</span></Link>
-          <Link to="/register"><span>Login</span></Link>
+          <Link to="/login"><span>Acesso à conta</span></Link>
+          
         </div>)
       }
 

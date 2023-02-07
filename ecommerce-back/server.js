@@ -14,8 +14,9 @@ const login = require("./routes/login");
 require("dotenv").config();
 const stripe = require("./routes/stripe")
 const produtos = require("./routes/produtos");
-const category = require('./routes/category');
-const path = require("path")
+const categorias = require('./routes/categorias');
+const path = require("path");
+const imagens = require("./routes/imagens")
 
 const dirname = path.resolve();
 //app.use( express.static(path.join(dirname, 'images')));
@@ -67,7 +68,8 @@ app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/api/stripe", stripe);
 app.use("/api/produtos", produtos)
-app.use("/api/categories", category)
+app.use("/api/categories", categorias)
+app.use("/api/imagens", imagens)
 
 
 

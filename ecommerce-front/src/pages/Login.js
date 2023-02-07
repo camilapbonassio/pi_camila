@@ -46,19 +46,19 @@ function Login() {
   return (
     <Container>
         <Row>
-            <Col md = {6} className="login-form-container">
+            <Col md = {12} className="login-form-container">
                 <Form onSubmit={handleSubmit}>
                 
                 <h1 className='mb-4 mt-4'>Entre na sua conta</h1>
                     
                     <Form.Group className='mb-4'>
-                        <Form.Label >E-mail</Form.Label>
+                    <div className='title'><Form.Label><span>E-mail</span></Form.Label></div>
                         <Form.Control type="email" placeholder = "Enter email"  required onChange={(e) => setUser({...user, email: e.target.value})}/>
                     </Form.Group>
                 
         
                     <Form.Group className='mb-4'>
-                        <Form.Label >Senha</Form.Label>
+                    <div className='title'><Form.Label><span>Senha</span></Form.Label></div>
                         <Form.Control type="password" placeholder = "Enter password" required onChange={(e) => setUser({...user, password: e.target.value})}/>
                     </Form.Group>
 
@@ -74,14 +74,12 @@ function Login() {
                     </Form.Group>
                     
                     <p>
-                        Ainda não tem uma conta? <Link to="/register">Crie uma conta</Link>{" "}
+                        Ainda não tem é cadastrado? <Link to="/register">Cadastre-se</Link>{" "}
                     </p>
                 
                 </Form>
             </Col>
-            <Col md = {6} className="login-image-container">
-
-            </Col>
+            
         </Row>
     </Container>
   )

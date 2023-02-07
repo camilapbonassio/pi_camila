@@ -2,8 +2,8 @@ import {createSlice} from "@reduxjs/toolkit"
 //import{toast} from "react-toastify"
 
 const initialState = {
-    cartItems: localStorage.getItem("cartItems")
-    ? JSON.parse(localStorage.getItem("cartItems")):[],
+    cartItems: sessionStorage.getItem("cartItems")
+    ? JSON.parse(sessionStorage.getItem("cartItems")):[],
     cartTotalQuantity: 0,
     cartTotalAmount: 0,
 };
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
             //});
             
         }
-            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+            sessionStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
 
         removeFromCart(state, action){
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
                 (cartItem) => cartItem._id !== action.payload._id
             );
             state.cartItems =nextCartItems;
-            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+            sessionStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
 
         decreaseCart(state, action){
@@ -53,13 +53,13 @@ const cartSlice = createSlice({
             );
             
             state.cartItems =nextCartItems;
-            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+            sessionStorage.setItem("cartItems", JSON.stringify(state.cartItems))
             }
         },
 
         clearCart(state, action){
             state.cartItems = [];
-            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+            sessionStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
 
         getTotals(state, action){
@@ -83,6 +83,7 @@ const cartSlice = createSlice({
             state.cartTotalAmount = total 
             
         }
+        
     }
 })
 
