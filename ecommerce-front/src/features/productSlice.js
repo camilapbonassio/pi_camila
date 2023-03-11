@@ -18,51 +18,6 @@ export const productsFetch = createAsyncThunk(
 )
 
 
-///send data to backend from dashboard
-/*
-export const productsCreate = createAsyncThunk(
-    "products/productsCreate", 
-    async (values) => {
-        try {
-            const response = await axios.post(
-                `${url}/produtos`, values, setHeaders() /// fixa o token no header para que seja feita a validação do middleware
-            );
-            return response.data
-            
-        } catch (error) {
-            console.error(error.response.data); 
-            
-        }
-        
-    }
-
-)
-*/
-
-/////edit 
-/*
-export const productsEdit = createAsyncThunk(
-    "products/productsEdit", 
-    async (values) => {
-        try {
-            const response = await axios.put(
-                `${url}/produtos/${values.product._id}`, values, setHeaders() /// fixa o token no header para que seja feita a validação do middleware
-            );
-            return response.data
-
-            //console.log(response.data)
-            
-            
-        } catch (error) {
-            console.error(error.response.data); 
-            
-        }
-        
-    }
-
-)
-*/
-
 ///delete data in db
 export const productsDelete = createAsyncThunk(
     "products/productsDelete", 

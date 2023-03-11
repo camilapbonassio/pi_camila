@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import "./Cart.css"
 import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from '../features/cartSlice';
 import { useNavigate } from 'react-router-dom';
-import PayButton from './PayButton';
+//import PayButton from './PayButton';
 
 
 const Cart = ()=> {
@@ -37,7 +37,7 @@ const Cart = ()=> {
     return(
         <div className='cart-container'>
 
-            <h2></h2>
+            
             {cart.cartItems.length === 0 ? (
                 <div className="cart-empty">
                 <p>Seu carrinho está vazio</p>
@@ -58,7 +58,6 @@ const Cart = ()=> {
                                     <img src={`http://localhost:5000/images/${cartItem?.img}`} alt={cartItem.item} />
                                     <div>
                                         <h3>{cartItem.item}</h3>
-                                        <p></p>
                                         <button onClick= {() => handleRemoveFromCart(cartItem)}>Remover</button>
                                     </div>
                                 </div>
@@ -89,14 +88,14 @@ const Cart = ()=> {
                             
                             <div>
                                 <p>Taxas de entrega serão calculadas no momento do pagamento</p>
-                                {auth._id? ( 
-                                <PayButton cartItems = {cart.cartItems} />)
+                                {auth._id? (<button className='cart-login' onClick={()=> navigate("/shipping")}>
+                                    Check Out
+                                </button>)
                                  : 
-                                (<button className='cart-login' onClick={()=> navigate("/login")}
-                                >
+                                (<button className='cart-login' onClick={()=> navigate("/login")}>
                                     Login para finalizar a compra
-                                    </button>
-                                )}
+                                </button>)
+                                }
                                 
                             </div>
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
-import { useState } from 'react';
 //import { useDispatch } from 'react-redux';
 import { PrimaryButton } from "./CommonStyled";
 //import { productsCreate } from '../features/productSlice';
@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 
 
 const CreateProduct = () => {
+  const auth = useSelector((state) => state.auth)
+  const userId = auth._id
     //const dispatch = useDispatch();
   
 
@@ -22,7 +24,7 @@ const CreateProduct = () => {
     const [valor, setValor ] = useState("");
 ///categories
     const [cat, setCat ] = useState([{'id': '', 'name': ''}])
-    const [categorias, setCategorias ] = useState("")
+    const [categoria, setCategoria ] = useState("")
     
 
     const handleProductImageUpload = (e) => {
@@ -90,12 +92,12 @@ const changeOnClick = (e) =>{
 
 
 const formData = new FormData()
-
+formData.append("userId", userId)
 formData.append("image", filename) //mesmo nome
 formData.append("item", item)
 formData.append("desc", desc)
 formData.append("valor", valor)
-formData.append("categorias", categorias) //categories
+formData.append("categoria", categoria) //categories
 
 console.log(formData)
 
@@ -106,7 +108,7 @@ axios
   console.log(err)
 })
 
-console.log(categorias)
+console.log(categoria)
 };
 
   return (
@@ -120,10 +122,10 @@ console.log(categorias)
             onChange= {handleProductImageUpload}
             required/>
 
-          <select value={categorias} onChange={(e) => setCategorias(e.target.value)} required>
-              <option value=""> Selecionar</option>
+          <select value={categoria} onChange={(e) => setCategoria(e.target.value)} required>
+              <option value="" > Selecionar</option>
               {cat.map(c =>(
-              <option  value = {c._id}>{c.name}</option>
+              <option  value={c._id}>{c.name}</option>
               ))}
               
           </select>

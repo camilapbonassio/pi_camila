@@ -21,6 +21,9 @@ import ProductDetails from './pages/productDetails';
 import OrderDetails from './pages/OrderDetails';
 import UserProfile from './pages/UserProfile';
 import ProductsView from "./pages/ProductsView"
+import ShippingScreen from './pages/ShippingScreen';
+import Payment from './pages/Payment';
+import PlaceOrder from './pages/PlaceOrder';
 //import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -47,7 +50,14 @@ function App() {
         
         
         <Route path="/cart" element={<Cart />} />
+        
         <Route path="/checkout-success" element={<CheckOutSuccess />} />
+
+        <Route path="/shipping" element={<ShippingScreen />} />
+
+        <Route path="/payment" element={<Payment />} />
+
+        <Route path="/placeorder" element={<PlaceOrder />} />
         
         <Route path="/admin" element={<Dashboard  />}>
           
