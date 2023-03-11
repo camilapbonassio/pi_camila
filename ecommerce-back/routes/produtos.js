@@ -1,7 +1,7 @@
 const express = require("express")
 const cloudinary = require("../utils/cloudinary")
-const {Produto} = require("../models/Produto")
-const {Categorias} = require("../models/Categoria")
+const Produto = require("../models/Produto")
+const Categoria = require("../models/Categoria")
 const {isAdmin} = require("../middleware/auth")
 const {upload} = require ("../middleware/multer")
 var fs = require('fs');
@@ -9,6 +9,7 @@ var path = require('path');
 require('dotenv/config');
 const multer  = require('multer');
 const router = express.Router()
+const asyncHandler = require('express-async-handler')
 
 //receber do cliente (do dashboard) - criar produto
 
@@ -17,15 +18,15 @@ const router = express.Router()
 router.post("/", upload.single("image"), async (req, res) =>{
 
     ///valida a categoria
-const category = await Categorias.findById(req.body.categorias)
-if(!category) return res.status(400).send("Invalid Category")
+
 
     try{
     const product = new Produto ({
+        userId: req.body.userId,
         item: req.body.item,
         desc: req.body.desc,
         valor: req.body.valor,
-        categorias: req.body.categorias,
+        categoria: req.body.categoria,
         img:req.file.originalname
     })
     console.log(req.body)
@@ -39,9 +40,12 @@ if(!category) return res.status(400).send("Invalid Category")
     
 
 /// enviar para o cliente (para a tela de produtos)
+
+
+
 router.get("/", async(req, res) => {
     try {
-        const products = await Produto.find().populate('categorias')
+        const products = await Produto.find({})//.populate('categoria')
         res.status(200).send(products)
         
     } catch (error) {
@@ -54,15 +58,21 @@ router.get("/", async(req, res) => {
 
 
 // get product by id 
-router.get("/find/:id", async (req, res) => {
-    try {
+router.get("/find/:id", asyncHandler (async (req, res) => {
+    
         const product = await Produto.findById(req.params.id);
-        res.status(200).send(product);
-    } catch (error) {
+        
+        if (product){
+            res.json(product)
+        } else{
+            res.status(404)
+            throw new Error ('Product not find') //middleware
+        }
+    
         res.status(500).send(error)
         
     }
-})
+))
 
 
 
@@ -88,10 +98,11 @@ router.delete("/:id", async (req,res) => {
 router.put("/:id", upload.single("image"), async(req, res) => {
     Produto.findById(req.params.id)
     .then((formData) =>{
+        formData.userId = req.body.userId,
         formData.item = req.body.item,
         formData.desc = req.body.desc,
         formData.valor = req.body.valor, 
-        formData.categorias = req.body.categorias,
+        formData.categoria = req.body.categoria,
         formData.img = req.file.originalname;
 
         formData
@@ -101,6 +112,8 @@ router.put("/:id", upload.single("image"), async(req, res) => {
     })
     .catch ((err) => res.status(400).json(`Error: ${err}`))
 });
+
+
 
 
 module.exports = router;

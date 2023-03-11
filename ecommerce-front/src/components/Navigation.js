@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
-import Container from 'react-bootstrap/Container';
 import "./Navigation.css"
 import { logoutUser } from '../features/authSlice';
 
@@ -17,36 +16,32 @@ const Navigation = () => {
   return (
 
     <nav>
+
     <div className='div-header-logo'>
-      <h2 className="div-header-titulo">Cooperativa de Parelheiros</h2>
+      <h2 className="div-header-titulo">Cooperativa</h2>
     </div>
 
     <div className='div-header-menu'>
-      <Link to="/">
-        <span>Home</span>
-      </Link>
+      
+      <Link to="/"><span>Home</span></Link>
 
       <Link to= "/products">
         <span>Produtos</span>
       </Link>
 
-      {auth._id ? ( 
+      {auth._id ? 
+        ( <>
         <Link to = "/admin/productsdash">
-        {auth.isAdmin ? 
-        <span className='admin'>Admin</span> : null}
+        {auth.isAdmin ? <span className='admin'>Admin</span> : null}</Link>
         
-      
-        <span 
-          onClick={()=>{
-            dispatch(logoutUser(null));
-          }}>Sair</span>
-          </Link>)
+        <span onClick={()=>{dispatch(logoutUser(null))}}>Sair</span>
+        </>
+        )
         :
         (<div>
           <Link to="/login"><span>Acesso à conta</span></Link>
           
-        </div>)
-      }
+        </div>)}
 
       
 

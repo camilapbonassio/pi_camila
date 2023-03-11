@@ -17,9 +17,13 @@ import { useEffect } from 'react';
 export default function EditProduct({prodId}) { ///alterar nome da função //recebe req.id de ProductsList
   const [open, setOpen] = React.useState(false);
 
+  const auth = useSelector((state) => state.auth)
+  const userId = auth._id
+
 ////
 //const dispatch = useDispatch();
 const {items, editStatus} = useSelector(state => state.products)
+
 
    
     ///multer
@@ -33,7 +37,7 @@ const {items, editStatus} = useSelector(state => state.products)
 
      ///categories
       const [cat, setCat ] = useState([{'id': '', 'name': ''}])
-      const [categorias, setCategorias ] = useState("")
+      const [categoria, setCategoria ] = useState("")
 
 
       ///get categories
@@ -65,17 +69,17 @@ const {items, editStatus} = useSelector(state => state.products)
             e.preventDefault();
 
             const formData = new FormData()
-            
+            formData.append("userId", userId)
             formData.append("image", image) //multer: image (mesmo nome)
             formData.append("item", item)
             formData.append("desc", desc)
             formData.append("valor", valor)
-            formData.append("categorias", categorias) //categories
+            formData.append("categoria", categoria) //categories
             
-            console.log(categorias)
+            console.log(categoria)
             
             axios
-            .put(`${url}/produtos/${prodId}`, formData, setHeaders())
+            .put(`${url}/produtos/${prodId}`, formData)
             .then((res) => res.data)
             .catch((err) => {
               console.log(err)
@@ -133,10 +137,10 @@ const {items, editStatus} = useSelector(state => state.products)
             onChange= {handleProductImageUpload}
             required/>
 
-          <select value={categorias} onChange={(e) => setCategorias(e.target.value)} required>
+          <select value={categoria} onChange={(e) => setCategoria(e.target.value)} required>
               <option value=""> Selecionar</option>
               {cat.map(c =>(
-              <option  value = {c._id}>{c.name}</option>
+              <option  value={c._id}>{c.name}</option>
               ))}
               
           </select>

@@ -20,10 +20,10 @@ const store = configureStore({
     products: productReducer,
     cart: cartReducer,
     auth: authReducer,
-    [productsApi.reducerPath]: productsApi.reducer,
+    //[productsApi.reducerPath]: productsApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(productsApi.middleware)
+  //middleware: (getDefaultMiddleware) => 
+    //getDefaultMiddleware().concat(productsApi.middleware)
   
 });
 

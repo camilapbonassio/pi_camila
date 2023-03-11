@@ -43,7 +43,6 @@ const columns = [
   {
     field: 'valor',
     headerName: 'Valor',
-
     width: 130,
   },
   {

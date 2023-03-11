@@ -14,9 +14,11 @@ const login = require("./routes/login");
 require("dotenv").config();
 const stripe = require("./routes/stripe")
 const produtos = require("./routes/produtos");
+const orders = require('./routes/orders')
 const categorias = require('./routes/categorias');
 const path = require("path");
 const imagens = require("./routes/imagens")
+const { notFound, errorHandler } = require ("./middleware/errorHandler")
 
 const dirname = path.resolve();
 //app.use( express.static(path.join(dirname, 'images')));
@@ -53,6 +55,9 @@ app.use(cors({
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({limit: '50mb'}))
 
+
+
+
 //app.use(bodyParser.json({limit: '200kb'}));
 
 ////
@@ -60,9 +65,9 @@ app.use(express.urlencoded({limit: '50mb'}))
 
 
 ////
-app.get("/products", (req, res)=>{
-  res.send(products);
-});
+///app.get("/products", (req, res)=>{
+///  res.send(products);
+///});
 
 app.use("/api/register", register);
 app.use("/api/login", login);
@@ -70,8 +75,12 @@ app.use("/api/stripe", stripe);
 app.use("/api/produtos", produtos)
 app.use("/api/categories", categorias)
 app.use("/api/imagens", imagens)
+app.use("/api/orders", orders)
 
 
+//errorhandler
+app.use(notFound)
+app.use(errorHandler)
 
 
 

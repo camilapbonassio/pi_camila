@@ -6,6 +6,13 @@ const initialState = {
     ? JSON.parse(sessionStorage.getItem("cartItems")):[],
     cartTotalQuantity: 0,
     cartTotalAmount: 0,
+    shippingAddress: sessionStorage.getItem("shippingAddress")
+    ? JSON.parse(sessionStorage.getItem("shippingAddress")):[],
+    paymentMethod: sessionStorage.getItem("paymentMethod")
+    ? JSON.parse(sessionStorage.getItem("paymentMethod")):[],
+    
+   
+    
 };
 
 const cartSlice = createSlice({
@@ -79,10 +86,28 @@ const cartSlice = createSlice({
                 }
             );
 
+            
             state.cartTotalQuantity = quantity
             state.cartTotalAmount = total 
             
-        }
+        },
+
+        saveShippingAddress(state, action){
+            //console.log(action.payload)
+            const data = action.payload
+            console.log(data)
+            state.shippingAddress = data;
+            sessionStorage.setItem("shippingAddress", JSON.stringify(state.shippingAddress))
+        },
+        savePaymentMethod(state, action){
+            //console.log(action.payload)
+            const data = action.payload
+            console.log(data)
+            state.paymentMethod = data;
+            sessionStorage.setItem("paymentMethod", JSON.stringify(state.paymentMethod))
+        },
+        
+      
         
     }
 })
@@ -91,5 +116,5 @@ const cartSlice = createSlice({
 
     
 
-export const { addToCart, removeFromCart, decreaseCart, clearCart, getTotals} =cartSlice.actions;
+export const { addToCart, removeFromCart, decreaseCart, clearCart, getTotals, saveShippingAddress, savePaymentMethod} =cartSlice.actions;
 export default cartSlice.reducer;

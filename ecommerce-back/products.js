@@ -1,48 +1,48 @@
-const products = [
+ const products = [
   {
-    id: 1,
-    item: "Banana prata",
-    descrição: " ",
-    quantidade: "1 dúzia",
-    valor: 715,
-    feature: true,
-    categoria: "frutas",
-    img: "https://res.cloudinary.com/dzxadz48r/image/upload/v1674354688/e-commerce/img-5-banana_mpgdm3.jpg"
+    item: "banana",
+    desc: "banana do sítio Alvorada",
+    valor: 7.99,
+    countInStock: 6,
+    img: "banana.png",
+    categorias: "Frutas",
+    rating:8.0,
+    numReviews: 4
     
   },
   {
-    id: 2,
-    item: "Mandioca",
-    descrição: " ",
-    quantidade: "1 kg",
-    valor: 1200,
-    feature: true,
-    categoria: "legumes",
-    img: "https://res.cloudinary.com/dzxadz48r/image/upload/v1674354824/e-commerce/img-7_nui0fi.jpg"
+    item: "mel",
+    desc: "mel do sítio Alvorada",
+    valor: 20.89,
+    countInStock: 10,
+    img: "mel.jpg",
+    categorias: "Mel",
+    rating:9.0,
+    numReviews: 5
     
   },
   {
-    id: 3,
-    item: "Mel de florada de laranjeira",
-    descrição: " ",
-    quantidade: "1 litro",
-    valor: 2000,
-    feature: true,
-    categoria: "mel",
-    img: "https://res.cloudinary.com/dzxadz48r/image/upload/v1674354688/e-commerce/img-4-mel_gfosc7.jpg"
+    item: "Tomate italiano",
+    desc: "Tomate italiano do sítio Alvorada",
+    valor: 6.90,
+    countInStock: 50,
+    img: "tomate.jpg",
+    categorias: "Legumes",
+    rating:5.0,
+    numReviews: 5
     
   },
   {
-    id: 4,
-    item: "Alface crespa",
-    descrição: " ",
-    quantidade: "1 maço",
-    valor: 200,
-    feature: true,
-    categoria: "verduras",
-    img: "https://res.cloudinary.com/dzxadz48r/image/upload/v1674354684/e-commerce/img-3-alface_kk4dmz.jpg"
+    item: "abacaxi",
+    desc: "abacaxi do sítio Alvorada",
+    valor: 12.00,
+    countInStock: 8,
+    img: "abacaxi.jpg",
+    categorias: "Frutas",
+    rating:9.0,
+    numReviews: 12
     
   },
-];
+]
 
 module.exports = products;

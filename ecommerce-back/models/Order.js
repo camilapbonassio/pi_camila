@@ -1,56 +1,89 @@
 const mongoose = require('mongoose');
+const User = require("../models/User")
 
-const SingleOrderItemSchema = mongoose.Schema({
-    produtor: {type: String, required: true},
-    item: {type: String, required: true},
-    desc: {type: String, required: true},
-    valor: {type: Number, required: true},
-    categoria: {type: String},
-    img: {type: String},
-    //category: { type: mongoose.Schema.Types.ObjectId, ref: "Category"},
-    cartQuantity: { type: Number, required: true }
-    //producedBy:{ type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true},
-    //countInStock: { type: Number, required: true, min: 0, max: 255}
-});
 
-const OrderSchema = mongoose.Schema(
+
+const orderSchema = mongoose.Schema(
   {
-    tax: {
-      type: Number,
+    userId:{
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "User"
     },
-    shippingFee: {
-      type: Number,
-      required: true,
-    },
-    subtotal: {
-      type: Number,
-      required: true,
-    },
-    total: {
-      type: Number,
-      required: true,
-    },
-    orderItems: [SingleOrderItemSchema],
+    orderItems:  [{
+      item: {type:String, required: true},
+      desc: {type: String, required: true},
+      valor: {type: Number, required: true},
+      categoria: { type: mongoose.Schema.Types.ObjectId, ref: "Categoria", required:true},
+      img: {type: String},
+      cartQuantity: { type: Number, required: true }
+    }],
     status: {
       type: String,
       enum: ['pending', 'failed', 'paid', 'delivered', 'canceled'],
       default: 'pending',
     },
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
+  
+    totalPrice: {
+      type: Number,
       required: true,
     },
-    clientSecret: {
+    
+    shippingAddress: {
+      address: {type: String, required: true},
+      city: {type: String, required: true},
+      postalCode: { type: String, required: true},
+      country: { type: String, required: true}
+    },
+    paymentMethod: {
       type: String,
       required: true,
+      default:false
     },
-    paymentIntentId: {
-      type: String,
+    paymentResult: {
+      id: { type: String},
+      status: { type: String},
+      update_time: { type: String },
+      email_address: { type: String}
     },
+    taxPrice: {
+      type: Number,
+      required: true,
+      default: 0.0
+    },
+    shippingPrice: {
+      type: Number,
+      required: true,
+      default: 0.0
+    },
+    subTotal: {
+      type: Number,
+      required: true,
+      default: 0.0
+    },
+    isPaid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    paidAt:{
+      type: Date
+    },
+    isDelivered: {
+      type: Boolean,
+      required: true,
+      default: false,
   },
-  { timestamps: true }
+  deliveredAt:{
+    type: Date
+  },
+
+},
+  { 
+    timestamps: true 
+  }
 );
 
-module.exports = mongoose.model('Order', OrderSchema);
+const Order = mongoose.model('Order', orderSchema);
+
+module.exports = Order
